@@ -1,0 +1,8 @@
+export enum ResultStatus {
+  NONE,
+  UNAUTHORIZED,
+  BAD_REQUEST,
+  SERVER_ERROR,
+  NOT_FOUND,
+  SUCCESS,
+}
