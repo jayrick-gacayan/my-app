@@ -3,7 +3,9 @@ import { ResultStatus } from "./enums/result_status";
 export class Result<T>{
   data?: T | null = undefined;
   statusCode: number = 0;
-  response: any = null;
+  response: any = undefined;
+  error?: any = undefined;
+  message?: any = undefined;
 
   constructor(init: Partial<Result<T>>) {
     Object.assign(this, init);
