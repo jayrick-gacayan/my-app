@@ -2,6 +2,7 @@ import { ToastContextProvider } from '@/providers/toast_context_provider'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { NextAuthSessionProvider } from '@/providers/next_auth_session_provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,12 +21,14 @@ export default function RootLayout({
   children: React.ReactNode
 }): JSX.Element {
   return (
-    <html lang="en">
-      <body className={`relative`}>
-        <ToastContextProvider>
-          {children}
-        </ToastContextProvider>
-      </body>
-    </html>
+    <NextAuthSessionProvider>
+      <html lang="en">
+        <body className={`relative`}>
+          <ToastContextProvider>
+            {children}
+          </ToastContextProvider>
+        </body>
+      </html>
+    </NextAuthSessionProvider>
   )
 }

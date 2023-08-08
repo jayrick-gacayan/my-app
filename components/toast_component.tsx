@@ -37,13 +37,15 @@ export function Toast({
     }
   }, []);
 
-  useTimeout(() => {
+  useTimeout(onToastClose, duration * 1000);
+
+  function onToastClose() {
     if (toastRef.current) {
       toastRef.current.classList.remove('animate-slide-in');
       toastRef.current.classList.add('animate-slide-out')
       setTimeout(onClose, 400);
     }
-  }, duration * 1000);
+  }
 
   return (
     <div ref={toastRef} className={`w-80 rounded h-auto text-white ${colors[type as keyof typeof colors]} hover:bg-opacity-80`}>
@@ -55,7 +57,7 @@ export function Toast({
           {message}
         </div>
         <div className="flex-none w-auto">
-          <Icon icon="heroicons:x-mark" className='w-8 h-8 rounded-full p-2 text-slate-600' onClick={onClose} />
+          <Icon icon="heroicons:x-mark" className='w-8 h-8 rounded-full p-2 text-slate-600' onClick={onToastClose} />
         </div>
       </div>
     </div>
