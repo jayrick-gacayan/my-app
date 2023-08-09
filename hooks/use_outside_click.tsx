@@ -11,7 +11,7 @@ export function useOutsideClick(ref: any, onEvent: () => void) {
   }, [ref]);
 
   function handleClickOutside(event: any) {
-    if (ref.current && !ref.current.contains(event.target)) {
+    if (ref && ref.current && !ref.current.contains(event.target)) {
       onEvent();
     }
   }
