@@ -20,13 +20,11 @@ export const ModalWrapperComponent =
       }
     }, [show])
 
-    useOutsideClick(ref, () => {
-      onClose();
-    })
+
 
     return show ? (
       <div ref={ref}
-        className='fixed h-screen w-screen top-0 left-0 flex justify-center items-center z-[9999] backdrop-blur'>
+        className='fixed h-screen w-screen top-0 left-0 flex justify-center items-center z-[9999] backdrop-blur-sm'>
         {children}
       </div>
     ) : null;
