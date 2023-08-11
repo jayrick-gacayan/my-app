@@ -1,13 +1,16 @@
 'use client';
 
 import { ModalWrapperComponent } from "@/components/modal_wrapper";
+import { Switch } from "@/components/switch";
 import { ToastContext } from "@/contexts/toast_context";
 import { useModal } from "@/hooks/use_modal";
 import { useOutsideClick } from "@/hooks/use_outside_click";
+import { useSwitch } from "@/hooks/use_switch";
 import { useContext, useRef } from "react";
 
 export function CreateToastButton() {
   const modalContentRef = useRef(null);
+  const { on, setOn } = useSwitch();
   const modalRef = useRef<HTMLDivElement>(null);
   const { isShowing, setIsShowing } = useModal();
   const { toastMessage } = useContext(ToastContext);
@@ -24,7 +27,7 @@ export function CreateToastButton() {
     }
   }
   return <>
-    <button className="bg-slate-500 p-2"
+    <button className="bg-slate-500 p-2 block"
       onClick={() => {
         setIsShowing(!isShowing);
         // let alertActions = ['success', 'warning', 'info', 'danger']
@@ -34,6 +37,8 @@ export function CreateToastButton() {
       }}>
       Click me
     </button>
+    <br />
+    <Switch on={on} onClick={() => { setOn(!on); }} />
     <ModalWrapperComponent
       ref={modalRef}
       show={isShowing}
