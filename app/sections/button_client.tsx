@@ -7,6 +7,7 @@ import { useModal } from "@/hooks/use_modal";
 import { useOutsideClick } from "@/hooks/use_outside_click";
 import { useSwitch } from "@/hooks/use_switch";
 import { useContext, useRef } from "react";
+import { OtpInputContainer } from "./otp_input_container";
 
 export function CreateToastButton() {
   const modalContentRef = useRef(null);
@@ -39,6 +40,8 @@ export function CreateToastButton() {
     </button>
     <br />
     <Switch on={on} onClick={() => { setOn(!on); }} />
+    <br />
+    <OtpInputContainer />
     <ModalWrapperComponent
       ref={modalRef}
       show={isShowing}
