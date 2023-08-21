@@ -8,10 +8,13 @@ import { useOutsideClick } from "@/hooks/use_outside_click";
 import { useSwitch } from "@/hooks/use_switch";
 import { useContext, useRef } from "react";
 import { OtpInputContainer } from "./otp_input_container";
+import { CustomRadioButton } from "@/components/custom_radio_button";
+import { useToggle } from "@/hooks/use_toggle";
 
 export function CreateToastButton() {
   const modalContentRef = useRef(null);
   const { on, setOn } = useSwitch();
+  const { toggle: radioOn, setToggle: setRadioOn } = useToggle();
   const modalRef = useRef<HTMLDivElement>(null);
   const { isShowing, setIsShowing } = useModal();
   const { toastMessage } = useContext(ToastContext);
@@ -41,6 +44,14 @@ export function CreateToastButton() {
     <br />
     <Switch on={on} onClick={() => { setOn(!on); }} />
     <br />
+    <CustomRadioButton on={radioOn}
+      onToggle={() => { setRadioOn((on) => { return !on; }); }}
+      activeColor={{
+        background: 'bg-[#22C55E]',
+        border: 'border-[#22C55E]'
+      }} />
+    <br />
+
     <OtpInputContainer />
     <ModalWrapperComponent
       ref={modalRef}
