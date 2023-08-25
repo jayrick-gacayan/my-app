@@ -10,6 +10,7 @@ import { useContext, useRef } from "react";
 import { OtpInputContainer } from "./otp_input_container";
 import { CustomRadioButton } from "@/components/custom_radio_button";
 import { useToggle } from "@/hooks/use_toggle";
+import { AuthRepository } from "@/repositories/auth_repository";
 
 export function CreateToastButton() {
   const modalContentRef = useRef(null);
