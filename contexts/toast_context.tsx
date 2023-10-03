@@ -1,4 +1,5 @@
 'use client';
+
 import { createContext } from "react";
 
 export const ToastContext = createContext<{
@@ -7,7 +8,8 @@ export const ToastContext = createContext<{
   toasts: { id: number; type: string; message: string }[];
 }>({
   toastMessage: (type: any, message: any) => { },
-  removeToast: (id: number) => { },
+  removeToast: (id: number) => {
+
+  },
   toasts: [],
 });
-

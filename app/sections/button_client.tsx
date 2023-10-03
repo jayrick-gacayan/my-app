@@ -6,11 +6,10 @@ import { ToastContext } from "@/contexts/toast_context";
 import { useModal } from "@/hooks/use_modal";
 import { useOutsideClick } from "@/hooks/use_outside_click";
 import { useSwitch } from "@/hooks/use_switch";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { OtpInputContainer } from "./otp_input_container";
 import { CustomRadioButton } from "@/components/custom_radio_button";
 import { useToggle } from "@/hooks/use_toggle";
-import { AuthRepository } from "@/repositories/auth_repository";
 
 export function CreateToastButton() {
   const modalContentRef = useRef(null);
@@ -19,6 +18,14 @@ export function CreateToastButton() {
   const modalRef = useRef<HTMLDivElement>(null);
   const { isShowing, setIsShowing } = useModal();
   const { toastMessage } = useContext(ToastContext);
+  const [requestStatus, setRequestStatus] = useState('none');
+
+  useEffect(() => {
+    if (requestStatus === 'success') {
+      toastMessage('success', `Success Message`);
+      setRequestStatus('none');
+    }
+  }, [requestStatus]);
 
   useOutsideClick(modalContentRef, () => {
     onClose();
@@ -31,12 +38,13 @@ export function CreateToastButton() {
       setTimeout(() => { setIsShowing(false); }, 400)
     }
   }
+
   return <>
     <button className="bg-slate-500 p-2 block"
       onClick={() => {
-        setIsShowing(!isShowing);
-        // let alertActions = ['success', 'warning', 'info', 'danger']
-        // let randomIndex = Math.floor(Math.random() * alertActions.length);
+        setRequestStatus('success')
+        // setIsShowing(!isShowing);
+        // let alertActions = ['success', 'warning', 'info', 'danger'];
         // let alertAction = alertActions[Math.floor(Math.random() * alertActions.length)]
         // toastMessage(alertAction, `${alertAction} Message`)
       }}>
