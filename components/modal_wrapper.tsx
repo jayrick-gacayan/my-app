@@ -1,5 +1,5 @@
 import { useOutsideClick } from "@/hooks/use_outside_click";
-import { ReactNode, RefObject, forwardRef, useEffect } from "react";
+import { ReactNode, forwardRef, useEffect } from "react";
 
 export const ModalWrapperComponent =
   forwardRef(({
