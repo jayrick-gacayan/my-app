@@ -1,4 +1,4 @@
-import Table, { ColumnDef } from "../sections/table";
+import Table, { ColumnDef, HeaderDef } from "../sections/table";
 import Image from "next/image";
 export interface Sample {
   id: number;
@@ -28,6 +28,28 @@ const data: Sample[] = [
   },
 ]
 
+const headers: HeaderDef<Sample>[] = [
+  {
+    key: 'id',
+    title: 'ID',
+    sortable: true,
+  },
+  {
+    key: 'name',
+    title: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'description',
+    title: 'Description',
+    sortable: true,
+  },
+  {
+    key: 'action',
+    title: 'Actions',
+  }
+]
+
 const columns: ColumnDef<Sample>[] = [
   {
     key: 'id',
@@ -54,7 +76,7 @@ const columns: ColumnDef<Sample>[] = [
   {
     key: 'action',
     title: 'Actions',
-    renderCell: (item) => { 
+    renderCell: (item) => {
       return (
         <div>
           This is the action container.
@@ -62,11 +84,11 @@ const columns: ColumnDef<Sample>[] = [
       )
     }
   },
-  
+
 ]
 
 export default function Page() {
   return (
-    <Table columns={columns} data={data} />
+    <Table headers={headers} columns={columns} data={data} />
   )
 }

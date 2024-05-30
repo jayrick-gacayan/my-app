@@ -5,6 +5,16 @@ type ColumnDefProps = {
   sortable?: boolean;
 }
 
+
+type HeaderDefProps = {
+  title: string;
+  sortable?: boolean;
+}
+
+export type HeaderDef<T> =
+  { key: string } & HeaderDefProps |
+  { key: keyof T } & HeaderDefProps
+
 export type ColumnDef<T> = ({
   key: string,
   renderCell: (item: T) => ReactNode;
@@ -16,30 +26,32 @@ export type ColumnDef<T> = ({
 
 interface DataProps<T> {
   data: T[];
+  headers: HeaderDef<T>[];
   columns: ColumnDef<T>[];
 }
 
-function isDataColumn<T>(column: ColumnDef<T>): column is ColumnDef<T> & { key: keyof T } {
-  return !(column.key in {} as T);
+function isNotDataColumn<T>(column: ColumnDef<T>):
+  column is ColumnDef<T> &
+  { key: string; renderCell: (item: T) => ReactNode } {
+  return typeof column.key === "string";
 }
 
 export default function Table<T>({
+  headers,
   data,
   columns
 }: DataProps<T>) {
-
-
 
   return (
     <table className="w-full">
       <thead>
         <tr>
           {
-            columns.map((column, columnIndex) => {
+            headers.map((header, headerIndex) => {
               return (
-                <th key={`table-header-cell-${columnIndex}`}
+                <th key={`table-header-cell-${headerIndex}`}
                   className="bg-blue-600 text-white p-2">
-                  {column.title}
+                  {header.title}
                   <svg xmlns="http://www.w3.org/2000/svg"
                     width="0.63em" height="1em" viewBox="0 0 320 512">
                     <path fill="currentColor"
@@ -58,8 +70,13 @@ export default function Table<T>({
               <tr key={`table-body-row-${dataValueIndex}-${JSON.stringify(dataValue)}`}>
                 {
                   columns.map((columnValue, columnValueIndex) => {
-                    if (isDataColumn(columnValue)) {
-                      return (
+                    return isNotDataColumn(columnValue) ?
+                      (
+                        <td key={`table-row-cell-${columnValueIndex}-${JSON.stringify(dataValue)}`}>
+                          {columnValue.renderCell(dataValue)}
+                        </td>
+                      ) :
+                      (
                         <td key={`table-row-cell-${columnValueIndex}`}>
                           {
                             !columnValue.renderCell ?
@@ -68,12 +85,6 @@ export default function Table<T>({
                           }
                         </td>
                       )
-                    }
-                    return (
-                      <td key={`table-row-cell-${columnValueIndex}-${JSON.stringify(dataValue)}`}>
-                        {columnValue.renderCell(dataValue)}
-                      </td>
-                    )
                   })
                 }
               </tr>
